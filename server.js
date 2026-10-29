@@ -4,7 +4,7 @@ const path = require('path');
 const crypto = require('crypto');
 
 const PORT = Number(process.env.PORT || 3000);
-const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
+const DATA_DIR = process.env.DATA_DIR || '/tmp/earn-data';
 const DB_FILE = path.join(DATA_DIR, 'state.json');
 const API_URL = process.env.RESULT_API_URL || 'https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json?pageNo=1';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'change-this-admin-password';

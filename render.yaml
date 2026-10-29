@@ -5,13 +5,9 @@ services:
     plan: starter
     buildCommand: npm install
     startCommand: npm start
-    disk:
-      name: hackii-data
-      mountPath: /var/data
-      sizeGB: 1
     envVars:
       - key: DATA_DIR
-        value: /var/data
+        value: /tmp/earn-data
       - key: ADMIN_PASSWORD
         sync: false
       - key: FREE_KEY
