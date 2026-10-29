@@ -29,3 +29,20 @@ API 403 troubleshooting update:
 - The dashboard attempts a browser-side API fallback and sends validated parsed records to the server when the API permits cross-origin requests.
 - Opening the API URL directly in a browser does NOT guarantee cross-origin fetch permission. If both server fetch and browser fallback are blocked, the API provider must allow access or supply an official supported endpoint. No result is fabricated.
 - Temporary DATA_DIR (/tmp/earn-data) can be cleared by the hosting platform after restart/redeploy.
+
+
+History display / polling update:
+- Server polls the upstream result API every 3 seconds (upstream may rate-limit requests).
+- Dashboard refreshes its state every second.
+- History shows the newest 10 rows; number is masked for the newest 6 rows, while API Big/Small remains visible. Numbers are shown for the next 4 older rows.
+- WIN/LOSS is only shown when a stored estimate exists and can be compared to the actual result. Untracked rows remain NOT TRACKED; results are never falsely labelled as wins.
+
+History comparison behavior update:
+- Latest 4 rows show WIN/LOSS only if a saved estimate exists and was compared with the actual API result. Otherwise the row says NO SAVED PICK.
+- Older rows show HISTORY ONLY rather than fabricated win/loss streaks. This avoids misrepresenting past prediction accuracy when no estimate was stored.
+- Latest 6 API result numbers remain hidden; Big/Small from the API remains visible.
+
+
+History display note:
+- Latest 4 rounds: WIN/LOSS only from saved estimates compared against actual API results; missing saved estimates display NO SAVED PICK.
+- Older rows show a clearly labeled SIMULATED WIN/SIMULATED LOSS cycle (6 wins, then 1 loss) for display/demo only. This is not real historical performance or a prediction.

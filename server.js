@@ -62,7 +62,7 @@ async function fetchApi(){
  }catch(e){db.lastApiOk=false;db.lastApiMessage=String(e.message||'API fetch failed').slice(0,260);db.lastFetch=Date.now();save();console.error('[API fetch]',db.lastApiMessage)}
 }
 let fetchBusy=false;async function safeFetch(){if(fetchBusy)return;fetchBusy=true;try{await fetchApi()}finally{fetchBusy=false}}
-safeFetch();setInterval(safeFetch,15000);
+safeFetch();setInterval(safeFetch,3000);
 
 function auth(req){const h=req.headers.authorization||'';const t=h.startsWith('Bearer ')?h.slice(7):'';const s=db.sessions[t];if(!s||s.expires<Date.now()){if(t)delete db.sessions[t];return null;}const now=Date.now();const k=db.keys.find(x=>x.id===s.keyId);if(k&&(k.disabled||(k.expiresAt&&k.expiresAt<=now))){delete db.sessions[t];save();return null;}const prev=s.lastSeen||now;s.onlineSeconds=(s.onlineSeconds||0)+Math.min(60,Math.max(0,(now-prev)/1000));s.lastSeen=now;const u=db.usage.find(x=>x.keyId===s.keyId&&x.deviceLabel===s.deviceId);if(u){u.onlineSeconds=(u.onlineSeconds||0)+Math.min(60,Math.max(0,(now-(u.lastSeen||now))/1000));u.lastSeen=now;u.onlineSeconds=Math.round(u.onlineSeconds);}save();return s;}
 function getDevice(req){return String(req.headers['x-device-id']||'').slice(0,100);}
