@@ -22,3 +22,10 @@ IMPORTANT
 - Free estimate uses SHA-256 + seeded PRNG. VIP uses server cryptographic random bytes for an estimate. Neither predicts a genuinely random future result.
 - Generated keys are bound server-side to the browser's device ID. Clearing browser storage or using another browser profile can appear as a new device.
 - This is a starter implementation; test the live API, key flow, and storage behavior before relying on it.
+
+
+API 403 troubleshooting update:
+- Server fetch reports a concise provider error rather than dumping a full HTML block page.
+- The dashboard attempts a browser-side API fallback and sends validated parsed records to the server when the API permits cross-origin requests.
+- Opening the API URL directly in a browser does NOT guarantee cross-origin fetch permission. If both server fetch and browser fallback are blocked, the API provider must allow access or supply an official supported endpoint. No result is fabricated.
+- Temporary DATA_DIR (/tmp/earn-data) can be cleared by the hosting platform after restart/redeploy.
